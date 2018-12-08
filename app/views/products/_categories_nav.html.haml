@@ -1,0 +1,13 @@
+%ul
+  - @category.siblings.each do |category|
+    - if category == @category
+      %li
+        = link_to category.name, root_path(:category => category.id)
+        %ul
+          - @category.children.each do |category, children|
+            %li
+              = link_to category.name, root_path(:category => category.id)
+              = render 'categories_nav', categories: children if children.present?
+    - else
+      %li
+        = link_to category.name, root_path(:category => category.id)

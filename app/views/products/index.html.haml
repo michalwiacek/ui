@@ -1,0 +1,35 @@
+= form_tag new_product_path, method: :get do
+  = select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name)
+  = submit_tag "New Product", name: nil
+
+%h2
+  = @category.name
+#breadcrumbs
+  - @category.ancestors.each do |cat|
+    = link_to cat.name, root_path(:category => cat.id)
+  = link_to @category.name, root_path(:category => @category.id), class: "red"
+%br
+#submenu
+  = render 'categories_nav', categories: Category.all.arrange
+%br
+
+%h1 Listing products
+
+%table
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+      %th
+
+  %tbody
+    - @products.each do |product|
+      %tr
+        %td= product.name
+        %td= product.properties
+        %td= link_to 'Show', product
+        %td= link_to 'Edit', edit_product_path(product)
+        %td= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' }
+%br
