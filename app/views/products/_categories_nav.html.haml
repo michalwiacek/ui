@@ -1,13 +1,16 @@
-%ul
-  - @category.siblings.each do |category|
-    - if category == @category
-      %li
-        = link_to category.name, root_path(:category => category.id)
-        %ul
+%nav.navbar.navbar-light.bg-light
+  %nav.nav.nav-pills.flex-column
+    - @category.siblings.each do |category|
+      - if category == @category
+        = link_to category.name, root_path(:category => category.id), class: "nav-link btn-outline-info"
+        -# %span.badge.badge-secondary.badge-pill
+          = category.products.count
+        %nav.nav.nav-pills.flex-column
           - @category.children.each do |category, children|
-            %li
-              = link_to category.name, root_path(:category => category.id)
-              = render 'categories_nav', categories: children if children.present?
-    - else
-      %li
-        = link_to category.name, root_path(:category => category.id)
+            = link_to category.name, root_path(:category => category.id), class: "nav-link ml-3"
+            -# %span.badge.badge-secondary.badge-pill
+              = category.products.count
+            = render 'categories_nav', categories: children if children.present?
+      - else
+        %li
+          = link_to category.name, root_path(:category => category.id), class: "nav-link"

@@ -1,27 +1,29 @@
+# frozen_string_literal: true
+
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:show, :edit, :update, :destroy]
+  before_action :set_category, only: %i[show edit update destroy]
 
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all.arrange
+    @categories = Category.all
+    @categories_nested = Category.all.arrange
   end
 
   # GET /categories/1
   # GET /categories/1.json
-  def show
-  end
+  def show; end
 
   # GET /categories/new
   def new
     @category = Category.new
 
-    @categories = Category.all.each { |c| c.ancestry = c.ancestry.to_s + (c.ancestry != nil ? "/" : '') + c.id.to_s }.sort {|x,y| x.ancestry <=> y.ancestry }.map{ |c| ["-" * (c.depth - 1) + c.name,c.id] }
+    @categories = Category.all.each { |c| c.ancestry = c.ancestry.to_s + (!c.ancestry.nil? ? '/' : '') + c.id.to_s }.sort_by(&:ancestry).map { |c| ['-' * (c.depth - 1) + c.name, c.id] }
   end
 
   # GET /categories/1/edit
   def edit
-    @categories = Category.all.each { |c| c.ancestry = c.ancestry.to_s + (c.ancestry != nil ? "/" : '') + c.id.to_s }.sort {|x,y| x.ancestry <=> y.ancestry }.map{ |c| ["-" * (c.depth - 1) + c.name,c.id] }
+    @categories = Category.all.each { |c| c.ancestry = c.ancestry.to_s + (!c.ancestry.nil? ? '/' : '') + c.id.to_s }.sort_by(&:ancestry).map { |c| ['-' * (c.depth - 1) + c.name, c.id] }
   end
 
   # POST /categories
@@ -65,13 +67,14 @@ class CategoriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_category
-      @category = Category.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def category_params
-      params.require(:category).permit(:name, :parent_id, fields_attributes: [:name, :field_type])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_category
+    @category = Category.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def category_params
+    params.require(:category).permit(:name, :parent_id, fields_attributes: %i[name field_type])
+  end
 end

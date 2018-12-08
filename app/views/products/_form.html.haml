@@ -20,4 +20,4 @@
   = f.fields_for :properties, OpenStruct.new(@product.properties) do |builder|
     - @product.category.fields.each do |field|
       = render "/products/fields/#{field.field_type}", field: field, f: builder
-  = f.submit 'save'
+  = f.submit 'save', class: "btn btn-primary"

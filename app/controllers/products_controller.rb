@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
-  
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :set_product, only: %i[show edit update destroy]
 
   def index
     if params[:category]
@@ -9,10 +10,14 @@ class ProductsController < ApplicationController
       descendant_ids << @category.id
       @products = Product.where(category_id: descendant_ids)
     else
-      @category = false
+      @category = Category.first
       @products = Product.all
     end
-    @products = @products.where("name like ?", "%" + params[:name] + "%") if params[:name]
+    
+    @q = Product.ransack(params[:q])
+    @products = @q.result
+    @products = @products.where('name like ?', '%' + params[:name] + '%') if params[:name]
+    @products = @products.where('price like ?', '%' + params[:price] + '%') if params[:price]
     @categories = Category.all
   end
 
@@ -20,15 +25,14 @@ class ProductsController < ApplicationController
     @product = Product.new(category_id: params[:category_id])
   end
 
-  def show
-  end
+  def show; end
 
   def create
     @product = Product.new(product_params)
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
-      render action: "new"
+      render action: 'new'
     end
   end
 
@@ -39,7 +43,6 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:name, :category_id, :price, properties: Category.find(params[:product][:category_id]).fields.map {|x| x.name.to_sym})
+    params.require(:product).permit(:name, :category_id, :price, properties: Category.find(params[:product][:category_id]).fields.map { |x| x.name.to_sym })
   end
-
 end
