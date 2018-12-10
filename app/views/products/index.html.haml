@@ -1,0 +1,32 @@
+.container
+  = form_tag new_product_path, method: :get do
+    = select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name)
+    = submit_tag "New Product", name: nil
+
+  %h2
+    = @category.name
+  .breadcrumb#breadcrumbs
+    %ol.breadcrumb
+    - @category.ancestors.each do |cat|
+      = link_to cat.name, root_path(:category => cat.id), class: 'breadcrumb-item'
+    = link_to @category.name, root_path(:category => @category.id), class: 'breadcrumb-item active'
+  %br
+  .row
+    .col
+      #submenu
+        = render 'categories_nav', categories: Category.all.arrange
+        = render 'filters', q: @q
+    .col-8
+      %table.table.table
+        %thead
+          %tr
+            %th Name
+            %th
+            %th
+
+        %tbody
+          - @products.each do |product|
+            %tr
+              %td= product.name
+              %td= product.properties
+              %td= link_to 'Show', product

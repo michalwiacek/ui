@@ -1,0 +1,19 @@
+= simple_form_for @category do |f|
+  - if @category.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@category.errors.count, "error")} prohibited this category from being saved:"
+      %ul
+        - @category.errors.full_messages.each do |message|
+          %li= message
+  .field
+    = f.label :parent_id
+    = f.select :parent_id, @categories
+  .field
+    = f.label :name
+    = f.text_field :name
+  .fields
+    = f.simple_fields_for :fields do |builder|
+      = render 'field_fields', f: builder
+  .actions
+    = f.submit 'Save'
+    = link_to_add_association "Add Field", f, :fields, class: 'btn btn-primary', data: { association_insertion_node: '.fields'}

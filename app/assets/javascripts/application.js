@@ -11,6 +11,16 @@
 // about supported directives.
 //
 //= require rails-ujs
+//= require jquery3
+//= require popper
+//= require bootstrap-sprockets
 //= require activestorage
 //= require turbolinks
+//= require cocoon
+//= material/bootstrap-material-design.min
+//= material/bootstrap-datepicker
+//= material/material-kit
+//= material/moment.min
+//= material/nouislider.min
+//= material/jquery.sharrre
 //= require_tree .
