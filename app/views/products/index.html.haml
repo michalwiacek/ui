@@ -3,10 +3,10 @@
   %h2 please run seeds first
 -else
   .container
-    -if @category.childless? 
-      = form_tag new_product_path, method: :get do
-        = hidden_field_tag :category_id, input_html: {value: @category.id}
-        = submit_tag "Add a new #{@category.name}", name: nil , class: 'btn'
+    -# -if @category.childless? 
+    -#   = form_tag new_product_path, method: :get do
+    -#     = hidden_field_tag :category_id, input_html: {value: @category.id}
+    -#     = submit_tag "Add a new #{@category.name}", name: nil , class: 'btn'
 
     %h2
       = @category.name
