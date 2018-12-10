@@ -1,32 +1,46 @@
-.container
-  = form_tag new_product_path, method: :get do
-    = select_tag :category_id, options_from_collection_for_select(Category.all, :id, :name)
-    = submit_tag "New Product", name: nil
+-unless @category
+  %h2 please run seeds first
+-else
+  .container
+    -if @category.childless? 
+      = form_tag new_product_path, method: :get do
+        = hidden_field_tag :category_id, input_html: {value: @category.id}
+        = submit_tag "Add a new #{@category.name}", name: nil , class: 'btn'
 
-  %h2
-    = @category.name
-  .breadcrumb#breadcrumbs
-    %ol.breadcrumb
-    - @category.ancestors.each do |cat|
-      = link_to cat.name, root_path(:category => cat.id), class: 'breadcrumb-item'
-    = link_to @category.name, root_path(:category => @category.id), class: 'breadcrumb-item active'
-  %br
-  .row
-    .col
-      #submenu
-        = render 'categories_nav', categories: Category.all.arrange
-        = render 'filters', q: @q
-    .col-8
-      %table.table.table
-        %thead
-          %tr
-            %th Name
-            %th
-            %th
-
-        %tbody
-          - @products.each do |product|
-            %tr
-              %td= product.name
-              %td= product.properties
-              %td= link_to 'Show', product
+    %h2
+      = @category.name
+    .breadcrumb#breadcrumbs
+      %ol.breadcrumb
+      - @category.ancestors.each do |cat|
+        = link_to cat.name, root_path(:category => cat.id), class: 'breadcrumb-item'
+      = link_to @category.name, root_path(:category => @category.id), class: 'breadcrumb-item active'
+    %br
+    .row
+      .col
+        #submenu
+          -if @category.childless? 
+            = form_tag new_product_path, method: :get do
+              = hidden_field_tag :category_id, @category.id
+              = submit_tag "Add a new #{@category.name}", name: nil , class: 'btn btn-rose'
+          %nav.navbar.float-left.flex-column
+            = render 'categories_nav', categories: Category.all.arrange
+            = render 'filters', q: @q, properties: @properties, category: @category
+      .col-8
+        - unless @products != nil
+          %h4 no products were found matching your selection
+        - else
+          %table.table
+            %thead
+              %tr
+                %th Name
+                %th Info
+                %th
+            %tbody
+              - @products.each do |product|
+                %tr
+                  %td= product.name
+                  - product.property_values.map do |x|
+                    %td
+                      = Property.find(x.property_id).name
+                      = x.field_value
+                  %td= link_to 'Show', product

@@ -1,0 +1,11 @@
+Search Form:
+%br/
+- properties.each do |prop|
+  = form_tag( '/', :method => :get ) do
+    = hidden_field_tag :category, category.id
+    = hidden_field_tag :name, prop.name
+    %fieldset.form-check.form-inline
+      = render "/products/filter_fields/#{prop.field_type}", prop: prop
+    -# = label_tag prop.name
+    -# = text_field_tag :field_value
+    = submit_tag 'Search', name: nil

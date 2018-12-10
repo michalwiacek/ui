@@ -44,3 +44,5 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'cocoon'
 gem 'simple_form'
 gem 'ransack'
+
+gem "binding_of_caller"
