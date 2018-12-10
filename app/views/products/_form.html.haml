@@ -1,9 +1,9 @@
-= form_for @product do |f|
+= simple_form_for @product do |f|
   - if @product.errors.any?
     #error_explanation
     %h2
       = pluralize(@product.errors.count, "error")
-      prohibited thi product from being saved:
+      prohibited this product from being saved:
     %ul
       - @product.errors.full_messages.each do |msg|
         %li
@@ -13,11 +13,9 @@
   
   = f.label :name
   = f.text_field :name
+  = f.simple_fields_for :property_values do |ff|
+    - prop = Property.find(ff.object.property_id)
+    = render "/products/fields/#{prop.field_type}", ff: ff, f: f, prop: prop
+    = ff.hidden_field :property_id, input_html: {value: ff.object.property_id}
 
-  = f.label :price
-  = f.number_field :price
-
-  = f.fields_for :properties, OpenStruct.new(@product.properties) do |builder|
-    - @product.category.fields.each do |field|
-      = render "/products/fields/#{field.field_type}", field: field, f: builder
-  = f.submit 'save', class: "btn btn-primary"
+  = f.submit 'Save', class: "btn btn-primary"

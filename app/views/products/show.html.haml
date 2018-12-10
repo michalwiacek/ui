@@ -1,5 +1,6 @@
 = @product.name
 
-- @product.properties.each do |prop|
+- @product.property_values.each do |prop|
   %h4
-    = "#{prop[0]} : #{prop[1]}"
+    = Property.find(prop.property_id).name
+    = prop.field_value
