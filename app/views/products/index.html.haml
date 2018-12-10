@@ -24,20 +24,23 @@
               = submit_tag "Add a new #{@category.name}", name: nil , class: 'btn btn-rose'
           %nav.navbar.float-left.flex-column
             = render 'categories_nav', categories: Category.all.arrange
-            = render 'filters', q: @q
+            = render 'filters', q: @q, properties: @properties, category: @category
       .col-8
-        %table.table
-          %thead
-            %tr
-              %th Name
-              %th Info
-              %th
-          %tbody
-            - @products.each do |product|
+        - unless @products != nil
+          %h4 no products were found matching your selection
+        - else
+          %table.table
+            %thead
               %tr
-                %td= product.name
-                - product.property_values.map do |x|
-                  %td
-                    = Property.find(x.property_id).name
-                    = x.field_value
-                %td= link_to 'Show', product
+                %th Name
+                %th Info
+                %th
+            %tbody
+              - @products.each do |product|
+                %tr
+                  %td= product.name
+                  - product.property_values.map do |x|
+                    %td
+                      = Property.find(x.property_id).name
+                      = x.field_value
+                  %td= link_to 'Show', product
