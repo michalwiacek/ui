@@ -13,10 +13,12 @@
  *= require_tree .
  *= require_self
  *= require font-awesome
- *= require material/material-kit.css
- *= require material/demo.css
  */
 
+ @import "material-scss/**/*";
+ @import "font-awesome";
+ @import "bootstrap";
+ 
 ul,li {
   padding-left: 10px
 }
