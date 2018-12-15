@@ -13,8 +13,11 @@
       = render 'layouts/nav'
     
     %main
-      .container.col-lg-10.col-md-12
-        = yield
+      = yield
 
     %footer.page-footer.text-center.font-small.mt-4.wow.fadeIn.pt-4
       = render 'layouts/footer'
+
+:javascript
+    // Animations initialization
+    new WOW().init();

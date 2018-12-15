@@ -1,22 +1,25 @@
-%h1 Listing categories
+.container
+  .mt-5
+    %span " "
+  .mt-5
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th
-      %th
-      %th
-
-  %tbody
-    - @categories.each do |category|
+  %table
+    %thead
       %tr
-        %td= category.name
-        %td= link_to 'Show', category
-        %td= link_to 'Edit', edit_category_path(category)
-        %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
-%br
+        %th Name
+        %th
+        %th
+        %th
 
-= nested_groups(@categories_nested)
+    %tbody
+      - @categories.each do |category|
+        %tr
+          %td= category.name
+          %td= link_to 'Show', category
+          %td= link_to 'Edit', edit_category_path(category)
+          %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
+  %br
 
-= link_to 'New Category', new_category_path
+  = nested_groups(@categories_nested)
+
+  = link_to 'New Category', new_category_path
