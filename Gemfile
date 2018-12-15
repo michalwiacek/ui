@@ -22,9 +22,15 @@ gem 'uglifier', '>= 1.3.0'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'rspec-rails', '~> 3.8'
+  gem 'factory_bot_rails'
+  gem 'fuubar'
+  gem 'database_cleaner'
 end
 
 group :development do
+  gem 'guard'
+  gem 'guard-rspec'
   gem 'better_errors'
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'pry'
@@ -35,6 +41,7 @@ group :development do
 end
 
 group :test do
+  gem 'rspec'
   gem 'capybara', '>= 2.15'
   gem 'chromedriver-helper'
   gem 'selenium-webdriver'
