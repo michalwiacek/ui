@@ -1,4 +1,4 @@
-#SETUP
+## SETUP
 
 `> docker-compose build`
 
@@ -12,7 +12,7 @@
 
 and then just go to `localhost:3000`
 
-#TODO
+## TODO
 
 1. ~~brak instrukcji uruchomienia aplikacji (README.md)~~
 
