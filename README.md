@@ -1,11 +1,10 @@
 #SETUP
 
 `> docker-compose build`
-
-`> docker-compose up`
-
-### for seeds just run:
-`> docker-compose run unitedideas rake db:seed`
+`> docker-compose run --rm web bin/rails db:create`
+`> docker-compose run --rm web bin/rails db:migrate`
+`> docker-compose run --rm web bin/rails db:seed`
+`> docker-compose up -d`
 
 #TODO
 
