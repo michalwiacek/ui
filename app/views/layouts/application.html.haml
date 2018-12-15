@@ -7,6 +7,18 @@
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
-    = stylesheet_link_tag "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"
-  %body
-    = yield
+    
+  %body{:class => "#{controller_name} #{action_name}"}
+    %header
+      = render 'layouts/nav'
+    
+    %main
+      = yield
+
+    %footer.page-footer.text-center.font-small.mt-4.wow.fadeIn.pt-4
+      = render 'layouts/footer'
+    
+    = javascript_include_tag 'mdb'
+:javascript
+    // Animations initialization
+    new WOW().init();

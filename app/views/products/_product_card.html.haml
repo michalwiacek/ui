@@ -1,0 +1,17 @@
+.card
+    / Card image
+    .view.overlay.zoom
+        %img
+            =image_tag 'gift.jpg', class: 'card-img-top'
+        .mask.rgba-white-slight
+    / Card image
+    / Card content
+    .card-body.text-center
+        / Category & Title
+        %h5 
+            =link_to product.category.name, product.category, class: "grey-text"
+        %h5
+            %strong
+                = link_to product.name, product, class: "dark-grey-text"
+        %h4.font-weight-bold.blue-text
+            = "#{product.property_values.find_by_property_id(product.properties.find_by_name('Cena').id).field_value}€"

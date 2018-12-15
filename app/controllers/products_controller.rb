@@ -33,7 +33,6 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.update(product_params)
-    # @product.category.ancestors.map {|x| @product.properties << x.properties}
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
@@ -43,7 +42,6 @@ class ProductsController < ApplicationController
   
   def new
     @product = Product.new(category_id: params[:category_id])
-    # proprety_ids = @product.category.ancestors.map {|x| x.properties.map {|y| y.id}}.flatten
     @product.category.ancestors.map {|x| @product.properties << x.properties}
     @product.properties << @product.category.properties
     @product.properties.each {|x| @product.property_values.build(property_id: x.id)}
@@ -70,6 +68,7 @@ class ProductsController < ApplicationController
   end
   
   def product_params
-    params.require(:product).permit(:name, :category_id, :price, property_values_attributes: [:id, :field_value, :product_id, :property_id])
+    params.require(:product).permit(:name, :category_id, :price,
+       property_values_attributes: [:id, :field_value, :product_id, :property_id])
   end
 end

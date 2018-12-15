@@ -2,32 +2,22 @@
 
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
+  before_action :categories_nested, only: %i[new edit]
 
-  # GET /categories
-  # GET /categories.json
   def index
     @categories = Category.all
     @categories_nested = Category.all.arrange
   end
 
-  # GET /categories/1
-  # GET /categories/1.json
   def show; end
 
-  # GET /categories/new
   def new
     @category = Category.new
-
-    @categories = Category.all.each { |c| c.ancestry = c.ancestry.to_s + (!c.ancestry.nil? ? '/' : '') + c.id.to_s }.sort_by(&:ancestry).map { |c| ['-' * (c.depth - 1) + c.name, c.id] }
   end
 
-  # GET /categories/1/edit
   def edit
-    @categories = Category.all.each { |c| c.ancestry = c.ancestry.to_s + (!c.ancestry.nil? ? '/' : '') + c.id.to_s }.sort_by(&:ancestry).map { |c| ['-' * (c.depth - 1) + c.name, c.id] }
   end
 
-  # POST /categories
-  # POST /categories.json
   def create
     @category = Category.new(category_params)
     respond_to do |format|
@@ -41,8 +31,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /categories/1
-  # PATCH/PUT /categories/1.json
   def update
     respond_to do |format|
       if @category.update(category_params)
@@ -55,8 +43,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # DELETE /categories/1
-  # DELETE /categories/1.json
   def destroy
     @category.destroy
     respond_to do |format|
@@ -67,13 +53,17 @@ class CategoriesController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
+  def categories_nested
+    @categories = Category.all.each { |c| c.ancestry = c.ancestry.to_s + (!c.ancestry.nil? ? '/' : '') + c.id.to_s }
+    .sort_by(&:ancestry).map { |c| ['-' * (c.depth - 1) + c.name, c.id] }
+  end
+
   def set_category
     @category = Category.find(params[:id])
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def category_params
-    params.require(:category).permit(:name, :parent_id, categories_properties_attributes: [[ :id, :category_id, :property_id, :_destroy, property_attributes: [:name, :field_type, :_destroy]]])
+    params.require(:category).permit(:name, :parent_id, categories_properties_attributes:
+       [[ :id, :category_id, :property_id, :_destroy, property_attributes: [:name, :field_type, :_destroy]]])
   end
 end

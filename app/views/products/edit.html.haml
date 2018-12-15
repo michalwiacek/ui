@@ -1,7 +1,11 @@
-%h1 Editing product
+.container
+    .mt-5
+        %span " "
+    .mt-5
+    %h1 Editing product
 
-= render 'form'
+    = render 'form'
 
-= link_to 'Show', @product
-\|
-= link_to 'Back', products_path
+    = link_to 'Show', @product
+    \|
+    = link_to 'Back', products_path

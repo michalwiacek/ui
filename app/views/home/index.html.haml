@@ -1,0 +1,19 @@
+.view
+  %video(autoplay loop muted playsinline poster="https://mdbootstrap.com/img/Photos/Others/background.jpg" class="video-intro")
+    %source{:src => "https://mdbootstrap.com/img/video/Lines-min.mp4", :type => "video/mp4"}
+  / Mask & flexbox options
+  .mask.rgba-black-light.d-flex.justify-content-center.align-items-center
+    / Content
+    .text-center.white-text.mx-5.wow.fadeIn
+      %h1.display-4.mb-4
+        %strong Coming Soon!
+
+      %p#time-counter.border.border-light.my-4
+      %h4.mb-4
+        %strong We're working hard to finish the development of this site.
+      %h4.mb-4.d-none.d-md-block
+        %strong Until then have a look at our Free Bootstrap 4 tutorials
+      %a.btn.btn-outline-white.btn-lg{:href => "https://mdbootstrap.com/education/bootstrap/", :target => "_blank"}
+        Start free tutorial
+        %i.fa.fa-graduation-cap.ml-2
+ 

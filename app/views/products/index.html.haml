@@ -1,47 +1,80 @@
-= link_to "Categories", categories_path, class: "btn btn-primary-outline"
--unless @category
-  %h2 please run seeds first
--else
-  .container
-    -# -if @category.childless? 
-    -#   = form_tag new_product_path, method: :get do
-    -#     = hidden_field_tag :category_id, input_html: {value: @category.id}
-    -#     = submit_tag "Add a new #{@category.name}", name: nil , class: 'btn'
-
-    %h2
-      = @category.name
-    .breadcrumb#breadcrumbs
-      %ol.breadcrumb
+.container
+  .mt-5
+    %span " "
+  .mt-5
+  %nav.navbar.navbar-expand-lg.navbar-dark.mdb-color.lighten-3.mt-5
+    / Navbar brand
+    %span.navbar-brand Main Categories:
+    / Collapse button
+    %button.navbar-toggler{"aria-controls" => "basicExampleNav", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#basicExampleNav", "data-toggle" => "collapse", :type => "button"}
+      %span.navbar-toggler-icon
+    / Collapsible content
+    #basicExampleNav.collapse.navbar-collapse
+      / Links
+      %ul.navbar-nav.mr-auto
+        -Category.first.children.each do |cat|
+          %li.nav-item.active
+            = link_to cat.name, products_path(:category => cat.id), class: "nav-link"
+      / Links
+      %form.form-inline
+        .md-form.my-0
+          %input.form-control.mr-sm-2{"aria-label" => "Search", :placeholder => "Search", :type => "text"}/
+  / Section: Products v.3
+  / Pagination
+  -# %nav.d-flex.justify-content-center.wow.fadeIn
+  -#   %ul.pagination.pg-blue
+  -#     / Arrow left
+  -#     %li.page-item.disabled
+  -#       %a.page-link{"aria-label" => "Previous", :href => "#"}
+  -#         %span{"aria-hidden" => "true"} «
+  -#         %span.sr-only Previous
+  -#     %li.page-item.active
+  -#       %a.page-link{:href => "#"}
+  -#         1
+  -#         %span.sr-only (current)
+  -#     %li.page-item
+  -#       %a.page-link{:href => "#"} 2
+  -#     %li.page-item
+  -#       %a.page-link{:href => "#"} 3
+  -#     %li.page-item
+  -#       %a.page-link{:href => "#"} 4
+  -#     %li.page-item
+  -#       %a.page-link{:href => "#"} 5
+  -#     %li.page-item
+  -#       %a.page-link{"aria-label" => "Next", :href => "#"}
+  -#         %span{"aria-hidden" => "true"} »
+  -#         %span.sr-only Next
+      / Pagination
+  -icon = {}
+  %nav{"aria-label" => "breadcrumb"}
+    %ol.breadcrumb.ml-3.mr-3#breadcrumbs
       - @category.ancestors.each do |cat|
-        = link_to cat.name, root_path(:category => cat.id), class: 'breadcrumb-item'
-      = link_to @category.name, root_path(:category => @category.id), class: 'breadcrumb-item active'
-    %br
-    .row
-      .col
-        #submenu
-          -if @category.childless? 
-            = form_tag new_product_path, method: :get do
-              = hidden_field_tag :category_id, @category.id
-              = submit_tag "Add a new #{@category.name}", name: nil , class: 'btn btn-rose'
-          %nav.navbar.float-left.flex-column
-            = render 'categories_nav', categories: Category.all.arrange
-            = render 'filters', q: @q, properties: @properties, category: @category
-      .col-8
+        %li.breadcrumb-item
+          = link_to cat.name, products_path(:category => cat.id), class: 'text-dark'
+        %i.fa.fa-angle-left.pt-1.mx-2{"aria-hidden" => "true"}
+      %li.breadcrumb-item
+        = link_to @category.name, products_path(:category => @category.id), class: 'text-dark active'
+  %br
+  %section.row
+    .col-md-2
+      .container#submenu
+        -if @category.childless? 
+          = form_tag new_product_path, method: :get do
+            = hidden_field_tag :category_id, @category.id
+            = button_tag(type: "submit", class: "btn btn-large waves ") do
+              %i.material-icons add
+        .float-left
+          = render 'categories_nav', categories: Category.all.arrange
+          = render 'filters', q: @q, properties: @properties, category: @category
+    .col-md-1
+    .col-md-9
+      .container.text-center.mb-4
         - unless @products != nil
           %h4 no products were found matching your selection
         - else
-          %table.table
-            %thead
-              %tr
-                %th Name
-                %th Info
-                %th
-            %tbody
-              - @products.each do |product|
-                %tr
-                  %td= product.name
-                  - product.property_values.map do |x|
-                    %td
-                      = Property.find(x.property_id).name
-                      = x.field_value
-                  %td= link_to 'Show', product
+          - @products.in_groups_of(5, false).each do |group|
+            .row.wow.fadeIn
+              - group.each do |product|
+                .col-lg-3.col-md-6.mb-4
+                  = render 'product_card', product: product
+
