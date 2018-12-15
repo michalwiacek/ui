@@ -18,6 +18,9 @@
  *= require_self
  */
 
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
 ul,li {
   padding-left: 10px
 }

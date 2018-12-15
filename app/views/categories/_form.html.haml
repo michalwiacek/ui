@@ -19,6 +19,6 @@
       = f.simple_fields_for :categories_properties do |builder|
         = render 'categories_property_fields', f: builder
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class:"btn aqua-gradient"
     -# = link_to_add_association 'Add Proprety', f, :categories_properties, class: 'btn btn-primary', data: { association_insertion_node: '.fields'}
     = link_to_add_association 'Add Property', f, :categories_properties, 'data-association-insertion-node' => "#category-properties ol", 'data-association-insertion-method' => "append", :wrap_object => Proc.new {|categories_properties| categories_properties.build_property; categories_properties }

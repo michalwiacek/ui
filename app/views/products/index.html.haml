@@ -2,7 +2,7 @@
   .mt-5
     %span " "
   .mt-5
-  %nav.navbar.navbar-expand-lg.navbar-dark.mdb-color.lighten-3.mt-5.mb-5
+  %nav.navbar.navbar-expand-lg.navbar-dark.mdb-color.lighten-3.mt-5
     / Navbar brand
     %span.navbar-brand Main Categories:
     / Collapse button
@@ -46,14 +46,14 @@
   -#         %span.sr-only Next
       / Pagination
   -icon = {}
-  %h2
-    = @category.name
   %nav{"aria-label" => "breadcrumb"}
-    %ol.breadcrumb.amber.lighten-4#breadcrumbs
+    %ol.breadcrumb.ml-3.mr-3#breadcrumbs
       - @category.ancestors.each do |cat|
-        = link_to cat.name, products_path(:category => cat.id), class: 'breadcrumb-item'
-        %i.fa.fa-caret-left.mx-2{"aria-hidden" => "true"}
-      = link_to @category.name, products_path(:category => @category.id), class: 'breadcrumb-item active'
+        %li.breadcrumb-item
+          = link_to cat.name, products_path(:category => cat.id), class: 'text-dark'
+        %i.fa.fa-angle-left.pt-1.mx-2{"aria-hidden" => "true"}
+      %li.breadcrumb-item
+        = link_to @category.name, products_path(:category => @category.id), class: 'text-dark active'
   %br
   %section.row
     .col-md-2

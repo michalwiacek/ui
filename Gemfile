@@ -6,8 +6,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.5.3'
 gem 'ancestry'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'bootstrap', '~> 4.1.3'
 gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
 gem 'coffee-rails', '~> 4.2'
 gem 'font-awesome-rails'
 gem 'haml-rails'
@@ -19,6 +19,7 @@ gem 'rails', '~> 5.2.1'
 gem 'sass-rails', '~> 5.0'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
+gem 'active_link_to'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]

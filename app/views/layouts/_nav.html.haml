@@ -10,12 +10,9 @@
     #navbarSupportedContent.collapse.navbar-collapse
       / Left
       %ul.navbar-nav.mr-auto
-        %li.nav-item.active
-          = link_to "Home", root_path, class: "nav-link waves-effect"
-        %li.nav-item
-          = link_to "Categories", categories_path, class: "nav-link waves-effect"
-        %li.nav-item
-          = link_to "Products", products_path, class: "nav-link waves-effect"
+        = active_link_to "Home", root_path, class: "nav-link waves-effect", wrap_tag: :li, wrap_class: 'nav-item'
+        = active_link_to "Categories", categories_path, class: "nav-link waves-effect", wrap_tag: :li, wrap_class: 'nav-item'
+        = active_link_to "Products", products_path, class: "nav-link waves-effect", wrap_tag: :li, wrap_class: 'nav-item'
       / Right
       %ul.navbar-nav.nav-flex-icons
         %li.nav-item

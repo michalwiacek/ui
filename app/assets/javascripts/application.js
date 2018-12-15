@@ -14,7 +14,6 @@
 //= require jquery3
 //= require popper.min
 //= require bootstrap-sprockets
-//= require mdb
 //= require bootstrap
 //= require activestorage
 //= require turbolinks
