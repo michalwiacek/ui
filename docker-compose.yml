@@ -1,35 +1,13 @@
 version: '3'
 services:
-  unitedideas-db:
-    image: postgres:10.2
-    environment:
-      - POSTGRES_PASSWORD=mysecretpassword
-      - POSTGRES_USER=unitedideas
-      - POSTGRES_DB=unitedideas_development
+  db:
+    image: postgres:10.1-alpine
+  web:
+    build: .
+    command: bin/rails s -p 3000 -b '0.0.0.0'
     volumes:
-      - data-volume:/var/lib/postgresql
-  unitedideas-migrate:
-    build:
-      context: .
-      dockerfile: Dockerfile.development
-    depends_on:
-      - unitedideas-db
-    environment:
-      - PASSENGER_APP_ENV=development
-    command: ["./wait-for-postgres.sh", "unitedideas-db", "bin/rails", "db:migrate"]
-  unitedideas:
-    build:
-      context: .
-      dockerfile: Dockerfile.development
-    depends_on:
-      - unitedideas-db
-      - unitedideas-migrate
+      - .:/usr/src/app
     ports:
-      - "80:80"
-    environment:
-      - PASSENGER_APP_ENV=development
-      - RAILS_LOG_TO_STDOUT=true
-    volumes:
-      - .:/home/app/webapp
-volumes:
-  data-volume:
+      - "3000:3000"
+    depends_on:
+      - db

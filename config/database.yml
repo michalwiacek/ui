@@ -1,10 +1,33 @@
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#   host: unitedideas-db
+#   username: unitedideas
+#   password: mysecretpassword
+
+# development:
+#   <<: *default
+#   database: unitedideas_development
+
+# test:
+#   <<: *default
+#   database: unitedideas_test
+
+# production:
+#   <<: *default
+#   database: unitedideas_production
+#   username: unitedideas
+#   password: <%= ENV['UNITEDIDEAS_DATABASE_PASSWORD'] %>
+
 default: &default
   adapter: postgresql
   encoding: unicode
+  # For details on connection pooling, see rails configuration guide
+  # http://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: unitedideas-db
-  username: unitedideas
-  password: mysecretpassword
+  host: db
+  username: postgres
 
 development:
   <<: *default
@@ -13,9 +36,3 @@ development:
 test:
   <<: *default
   database: unitedideas_test
-
-production:
-  <<: *default
-  database: unitedideas_production
-  username: unitedideas
-  password: <%= ENV['UNITEDIDEAS_DATABASE_PASSWORD'] %>
