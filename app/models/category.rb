@@ -15,4 +15,15 @@ class Category < ApplicationRecord
 
   validates :name, presence: true
 
+  def self.branch
+    where(id: Category.select(:ancestry).distinct.pluck(:ancestry).compact.map { |x| x.split('/') }.flatten.uniq )
+  end
+
+  def self.unpopulated
+    includes(:products).where(products: {id: nil})
+  end 
+  
+  def self.unpopulated
+    includes(:products).where.not(products: {id: nil})
+  end 
 end
