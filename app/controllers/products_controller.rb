@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
-      render action: 'new'
+      render :edit
     end
   end
   
@@ -54,10 +54,10 @@ class ProductsController < ApplicationController
     @product.category.ancestors.map {|x| @product.properties << x.properties}
     @product.properties << @product.category.properties
     @product.property_values.each {|x| x.product_id = @product.id}
-    if @product.save!
+    if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
-      render action: 'new'
+      render :new
     end
   end
   

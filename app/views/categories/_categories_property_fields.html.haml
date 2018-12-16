@@ -1,8 +1,17 @@
 %li.control-group.nested-fields
   .controls
-    = f.fields_for :property do |prop|
+    -id = SecureRandom.hex
+    = f.simple_fields_for :property do |prop|
       = prop.input :name
-      = prop.select :field_type, %w[integer string boolean enum decimal]
+      = prop.select :field_type, %w[integer string boolean enum decimal], input_html:{ id: "#{id}"}
       = f.hidden_field :_destroy
+      = prop.input :options, input_html:{ id: "#{id}_options"}
 
     = link_to_remove_association "Remove Property", f
+
+:coffee
+  $ ->
+    $("#{id}_options").addClass("d-none")
+    $("#{id}").change ->
+    if $("#{id} :selected").val() == "enum"
+      $("#{id}_options").removeClass("d-none")

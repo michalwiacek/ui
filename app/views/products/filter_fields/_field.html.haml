@@ -1,0 +1,8 @@
+- required_string = required ? "required" : ""
+%div{class: "input #{type} #{required_string} #{item}"}
+  %label{class: "#{type} #{required_string}", for: "#{item}"}
+    - if required
+      %abbr{title: "required"}
+        *
+    = t("application.#{item}")
+  =my_filter_field_tag(item, type, options=nil, value="")

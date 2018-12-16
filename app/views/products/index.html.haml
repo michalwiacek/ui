@@ -72,7 +72,7 @@
         - unless @products != nil
           %h4 no products were found matching your selection
         - else
-          - @products.in_groups_of(5, false).each do |group|
+          - @products.in_groups_of(4, false).each do |group|
             .row.wow.fadeIn
               - group.each do |product|
                 .col-lg-3.col-md-6.mb-4
