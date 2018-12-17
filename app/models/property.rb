@@ -1,4 +1,6 @@
 class Property < ApplicationRecord
+  # searchkick
+
   has_many :categories_propreties
   has_many :categories, through: :categories_propreties
   has_many :products_propreties

@@ -3,7 +3,7 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show edit update destroy]
   before_action :categories_nested, only: %i[new edit]
-
+  
   def index
     @categories = Category.all
     @categories_nested = Category.all.arrange
@@ -54,7 +54,7 @@ class CategoriesController < ApplicationController
   private
 
   def categories_nested
-    @categories = Category.all.each { |c| c.ancestry = c.ancestry.to_s + (!c.ancestry.nil? ? '/' : '') + c.id.to_s }
+    @categories = Category.not_final.each { |c| c.ancestry = c.ancestry.to_s + (!c.ancestry.nil? ? '/' : '') + c.id.to_s }
     .sort_by(&:ancestry).map { |c| ['-' * (c.depth - 1) + c.name, c.id] }
   end
 
@@ -63,7 +63,8 @@ class CategoriesController < ApplicationController
   end
 
   def category_params
-    params.require(:category).permit(:name, :parent_id, categories_properties_attributes:
-       [[ :id, :category_id, :property_id, :_destroy, property_attributes: [:name, :field_type, :_destroy, :options]]])
+    params.require(:category).permit(:name, :parent_id, :is_last, :twin_id, property_ids: [],
+       categories_properties_attributes:[[ :id, :category_id, :property_id, :_destroy,
+        property_attributes:[:name, :field_type, :_destroy, :options]]])
   end
 end

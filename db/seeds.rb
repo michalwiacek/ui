@@ -21,13 +21,12 @@ l2 = Category.create!([{name: "Samochody", parent: root}, {name: "Telefony", par
 l2.first.properties.create!([{name: "Rocznik", field_type: "integer"},{name: "Przebieg", field_type: "integer"}])
 l2.last.properties.create!([{name: "Wersja", field_type: 'integer'},{name: 'System operacyjny', field_type: "string"}])
 
-l30.each do |name|
-  Category.create!(name: name, parent: l2.first)
-end
+opel = Category.create!(name: 'Opel', parent: l2.first, is_final: true)
+opel.properties.create!(name: "Silnik", field_type: "boolean", options: "benzyna, diesel")
+
+merc = Category.create!(name: 'Mercedes', parent: l2.first, is_final: true, twin_id: opel.id)
+tesla = Category.create!(name: 'Tesla', parent: l2.first, is_final: true)
 
 l31.each do |name|
-  Category.create!(name: name, parent: l2.last)
+  Category.create!(name: name, parent: l2.last, is_final: true)
 end
-
-# products
-

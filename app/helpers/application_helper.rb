@@ -17,23 +17,43 @@ module ApplicationHelper
         <label class='#{name}custom-control-label' for='#{name}'>#{name}</label>
       </div>".html_safe
     when 'decimal', 'integer'
-      "<label class='#{name}custom-control-label' for='#{name}Od'>#{name}</label>
-      <input name='#{name}Od' value='#{value}' type='number' id='#{name}Od' placeholder='od:'/><br>
-      <input name='#{name}Do' value='#{value}' type='number' id='#{name}Do' placeholder='do:'/>".html_safe
+      "<label class='#{name}custom-control-label' for='#{name}_od'>#{name}</label>
+      <input name='#{name}_od' value='#{value}' type='number' id='#{name}_od' placeholder='od:'/><br>
+      <input name='#{name}_do' value='#{value}' type='number' id='#{name}_do' placeholder='do:'/>".html_safe
     when 'string'
       "<label class='#{name}custom-control-label' for='#{name}'>#{name}</label>
       <input name='#{name}' value='#{value}' type='text' id='#{name}'/>".html_safe
     when 'enum'
-      select = "<label class='#{name}custom-control-label' for='#{name}Od'>#{name}</label>
-      <select name='#{name}' id='#{name}' >".html_safe
+      select = String.new ""
+      select << "<label class='#{name}custom-control-label' for='#{name}'>#{name}</label>
+      <select name='#{name}' id='#{name}' >"
       if options
-        options.each do |o|
-          select << "<option value='#{o}'>'#{o}'</option>".html_safe
+        options.split(", ").each do |o|
+          select << "<option value='#{o}'>#{o}</option>"
         end
       end
-      select << "</select>".html_safe
+      select << "</select>"
+      return select.html_safe
     else
       "<input name='#{name}' value='#{value}' type='text' />".html_safe
+    end
+  end
+
+  def dropdown_btn(btn_text: 'Select', &block)
+    links = capture(&block) if block_given?
+    btn = button_tag(class: 'btn btn-info dropdown-toggle', "aria-expanded" => false, "aria-haspopup" => true, data: { toggle: 'dropdown' },
+      type: 'button') do
+      concat content_tag(:span, btn_text, class: 'dropdown_btn_text')
+      # concat btn_text
+      # concat content_tag(:i, '', class: 'fa fa-angle-down')
+    end
+
+    drop = content_tag(:div, class: 'dropdown-menu dropdown-primary') do
+      links
+    end
+    content_tag(:div, class: 'dropdown') do
+      concat btn
+      concat drop
     end
   end
 

@@ -1,30 +1,7 @@
--# Search Form:
--# %br/
--# - properties.each do |prop|
--#   = form_tag( products_path, :method => :get ) do
--#     = hidden_field_tag :category, category.id
--#     = hidden_field_tag :name, prop.name
--#     %fieldset.form-check.form-inline
--#       = render "/products/filter_fields/#{prop.field_type}", prop: prop
--#     -# = label_tag prop.name
--#     -# = text_field_tag :field_value
--#     = submit_tag 'Search', name: nil
-
--# Search Form:
--# %br/
-
--#   = simple_form_for :filter, url: products_path do |f|
--#       = f.input :category, category.id, :as => :string
--#       -# - properties.each do |prop|
--#       -# = hidden_field_tag :name, prop.name
--#       -# %fieldset.form-check.form-inline
--#       -#   = render "/products/filter_fields/#{prop.field_type}", prop: prop
--#       -# = label_tag prop.name
--#       -# = text_field_tag :field_value
--#     = f.submit 'Search', name: nil
-
+Search Form:
 
 = form_tag(products_path, method: "GET") do
+  = hidden_field_tag :category, @category.id
   - properties.each do |p|
-    = render "products/filter_fields/field", type: p.field_type, required: false, item: p.name
+    = render "products/filter_fields/field", type: p.field_type,item: p.name, options: p.options, value: ""
   = submit_tag 'Search', name: nil, class: "btn btn-deep-orange mt-3"

@@ -52,4 +52,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'cocoon'
 gem 'simple_form'
-gem 'ransack'
+
+# gem 'elasticsearch-model', github: 'elastic/elasticsearch-rails', branch: '6.x'
+# gem 'elasticsearch-rails', github: 'elastic/elasticsearch-rails', branch: '6.x'
+# gem 'searchkick'

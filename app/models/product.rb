@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Product < ApplicationRecord
+  # searchkick
+
   belongs_to :category
 
   has_many :products_properties
