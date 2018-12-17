@@ -69,10 +69,10 @@
     .col-md-1
     .col-md-9
       .container.text-center.mb-4
-        - unless @products != nil
+        - if @products.empty?
           %h4 no products were found matching your selection
         - else
-          - @products.in_groups_of(5, false).each do |group|
+          - @products.in_groups_of(4, false).each do |group|
             .row.wow.fadeIn
               - group.each do |product|
                 .col-lg-3.col-md-6.mb-4

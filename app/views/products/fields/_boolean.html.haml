@@ -1,3 +1,2 @@
-.field
-  = ff.check_box :field_value
-  = ff.label prop.name
+.field.custom-control.custom-checkbox
+  = ff.input :field_value,  as: :boolean, label: prop.name, class: "custom-control-input"

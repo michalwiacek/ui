@@ -1,24 +1,25 @@
 = simple_form_for @category do |f|
-  - if @category.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@category.errors.count, "error")} prohibited this category from being saved:"
-      %ul
-        - @category.errors.full_messages.each do |message|
-          %li= message
   - unless @category.id == 1
-    .field
-      = f.label :parent_id
-      = f.select :parent_id, @categories
-  .field
-    = f.label :name
-    = f.text_field :name
-  .fields
+    = f.input :parent_id, collection: @categories
+  = f.input :twin_id, collection: Category.all, as: :grouped_select, group_method: :children, prompt: "Select To Copy Properties" 
+  = f.input :is_last
+  = f.input :name
 
   %fieldset#category-properties
     %ol
       = f.simple_fields_for :categories_properties do |builder|
         = render 'categories_property_fields', f: builder
   .actions
+    = link_to_add_association 'Add Property', f, :categories_properties,  |
+      'data-association-insertion-node' => "#category-properties ol",     |
+      'data-association-insertion-method' => "append", class:"btn aqua-gradient",  |
+      :wrap_object => Proc.new {|categories_properties|                   |
+      categories_properties.build_property; categories_properties }       |
+
+    %br
     = f.submit 'Save', class:"btn aqua-gradient"
-    -# = link_to_add_association 'Add Proprety', f, :categories_properties, class: 'btn btn-primary', data: { association_insertion_node: '.fields'}
-    = link_to_add_association 'Add Property', f, :categories_properties, 'data-association-insertion-node' => "#category-properties ol", 'data-association-insertion-method' => "append", :wrap_object => Proc.new {|categories_properties| categories_properties.build_property; categories_properties }
+
+:coffee
+  $ ->
+    $('#prop_input').change ->
+      prop_id = $('#prop_input :selected').val()

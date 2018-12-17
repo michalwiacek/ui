@@ -21,6 +21,12 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+body {
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+}
+
 ul,li {
   padding-left: 10px
 }
@@ -29,29 +35,33 @@ ul,li {
   margin-right: 0 !important;
 }
 
-main,
-.view {
-  height: 100%;
+main{
+  .view {
+    height: 90vh;
+  }
 }
 
 @media (max-width: 559px) {
-  main,
-  .view {
-    height: 1000px;
+  main{
+    .view {
+      height: 1000px;
+    }
   }
 }
 
 @media (min-width: 560px) and (max-width: 740px) {
-  main,
-  .view {
-    height: 700px;
+  main{
+    .view {
+      height: 700px;
+    }
   }
 }
 
 @media (min-width: 800px) and (max-width: 850px) {
-  main,
-  .view {
-    height: 600px;
+   main{
+    .view {
+      height: 700px;
+    }
   }
 }
 

@@ -2,24 +2,26 @@
   .mt-5
     %span " "
   .mt-5
+  = link_to 'New Category', new_category_path, class: "btn aqua-gradient"
+  .row
+    .col-6
+      %table
+        %thead
+          %tr
+            %th Name
+            %th
+            %th
+            %th
 
-  %table
-    %thead
-      %tr
-        %th Name
-        %th
-        %th
-        %th
-
-    %tbody
-      - @categories.each do |category|
-        %tr
-          %td= category.name
-          %td= link_to 'Show', category
-          %td= link_to 'Edit', edit_category_path(category)
-          %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
-  %br
-
-  = nested_groups(@categories_nested)
-
-  = link_to 'New Category', new_category_path
+        %tbody
+          - @categories.each do |category|
+            %tr
+              %td= category.name
+              %td
+                = dropdown_btn do
+                  = link_to 'Show', category, class: 'dropdown-item'
+                  = link_to 'Edit', edit_category_path(category), class: 'dropdown-item'
+                  = link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }, class: 'dropdown-item'
+      %br
+    .col-6
+      = nested_groups(@categories_nested)

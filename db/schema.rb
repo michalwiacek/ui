@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_08_223535) do
+ActiveRecord::Schema.define(version: 2018_12_16_173959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,8 @@ ActiveRecord::Schema.define(version: 2018_12_08_223535) do
     t.string "ancestry"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_last", default: false
+    t.integer "twin_id"
     t.index ["ancestry"], name: "index_categories_on_ancestry"
   end
 
@@ -58,6 +60,7 @@ ActiveRecord::Schema.define(version: 2018_12_08_223535) do
     t.string "field_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "options"
   end
 
   create_table "property_values", force: :cascade do |t|

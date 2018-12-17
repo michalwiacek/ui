@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Product < ApplicationRecord
+  # searchkick
+
   belongs_to :category
 
   has_many :products_properties
@@ -11,6 +13,14 @@ class Product < ApplicationRecord
 
   validates :name, presence: true
 
+  validate :validate_category
+
+
+  def validate_category
+    errors.add(:category_id, 'must be last node') unless category.childless?
+  end
+
+  
   # serialize :properties, Hash
 
   # validate :validate_properties

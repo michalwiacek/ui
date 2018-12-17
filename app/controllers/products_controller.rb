@@ -13,9 +13,9 @@ class ProductsController < ApplicationController
       @category = Category.first
       @products = Product.all
     end
-    @q = Product.ransack(params[:q])
     @properties = @category.ancestors.map {|x| x.properties}.flatten << @category.properties
     @properties.flatten!
+
     if params[:name] && params[:field_value] && params[:category]
       @category = Category.find(params[:category])
       descendant_ids = @category.descendant_ids
@@ -36,7 +36,7 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
-      render action: 'new'
+      render :edit
     end
   end
   
@@ -54,10 +54,10 @@ class ProductsController < ApplicationController
     @product.category.ancestors.map {|x| @product.properties << x.properties}
     @product.properties << @product.category.properties
     @product.property_values.each {|x| x.product_id = @product.id}
-    if @product.save!
+    if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
-      render action: 'new'
+      render :new
     end
   end
   

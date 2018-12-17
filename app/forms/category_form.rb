@@ -1,15 +1,14 @@
 class CategoryForm
   include ActiveModel::Model
 
-  attr_accessor :name, :project_id, :template_id, :requested_by_id, :owned_by_id
+  attr_accessor :name, :parent_id, :is_last, :categories_properties_attributes, :property_attributes, :property_ids, :existing_category_id
 
   validates :template_id, presence: true
 
   def initialize(params = {})
-    @project_id = params[:project_id]
-    @template_id = params[:template_id]
-    @requested_by_id = params[:requested_by_id]
-    @owned_by_id = params[:owned_by_id]
+    @name = params[:name]
+    @parent_id = params[:parent_id]
+    @is_last = params[:is_last]
   end 
 
   def persisted?
@@ -29,16 +28,13 @@ class CategoryForm
 
   def persist!
     ActiveRecord::Base.transaction do
-      create_stories
+      create_category
     end
   end
 
-  def create_stories
-    @template = Template.find(@template_id)
-    @story_templates = @template.story_templates
-    @story_templates.each do |st|
-      st.project_id = @project_id unless @project_id.blank?
-      st.copy_story_to_project
-    end
+  def create_category
+  end
+
+  def update_category
   end
 end

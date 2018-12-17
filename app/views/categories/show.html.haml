@@ -7,7 +7,21 @@
   %p
     %b Name:
     = @category.name
+    %table
+      %thead
+        %tr
+          %th 
+          %th prop
+          %th type
+          %th options
+      %tbody
+        - @category.properties.each do |prop|
+          %tr
+            %td= prop.id
+            %td= prop.name
+            %td= prop.field_type
+            %td= prop.options if prop.options
 
-  = link_to 'Edit', edit_category_path(@category)
+  = link_to 'Edit', edit_category_path(@category), class: "btn btn-info"
   \|
-  = link_to 'Back', categories_path
+  = link_to 'Back', categories_path, class: "btn btn-danger"
