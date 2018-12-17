@@ -1,7 +1,7 @@
 = simple_form_for @product do |f|
   /= f.hidden_field :category_id
   = f.error_notification
-  = f.association :category
+  = f.association :category, disabled: true
   = f.input :name
   = f.simple_fields_for :property_values do |ff|
     - prop = Property.find(ff.object.property_id)

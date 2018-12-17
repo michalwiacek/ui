@@ -42,8 +42,7 @@ class ProductsController < ApplicationController
   
   def new
     @product = Product.new(category_id: params[:category_id])
-    @product.category.ancestors.map {|x| @product.properties << x.properties}
-    @product.properties << @product.category.properties
+    copy_category_properties
     @product.properties.each {|x| @product.property_values.build(property_id: x.id)}
   end
   
@@ -51,8 +50,7 @@ class ProductsController < ApplicationController
   
   def create
     @product = Product.new(product_params)
-    @product.category.ancestors.map {|x| @product.properties << x.properties}
-    @product.properties << @product.category.properties
+    copy_category_properties
     @product.property_values.each {|x| x.product_id = @product.id}
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
@@ -62,6 +60,11 @@ class ProductsController < ApplicationController
   end
   
   private
+
+  def copy_category_properties
+    @product.category.ancestors.map {|x| @product.properties << x.properties}
+    @product.properties << @product.category.properties
+  end
   
   def set_product
     @product = Product.find(params[:id])
