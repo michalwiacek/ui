@@ -36,12 +36,12 @@ class Category < ApplicationRecord
   end 
   
   def parent_must_not_be_leaf
-    errors.add(:parent_id, 'must not be leaf') if parent.is_last
+    unless Category.first.nil?
+      errors.add(:parent_id, 'must not be leaf') if parent.is_last
+    end
   end
 
   def duplicate_twin_properties
-    binding.pry
-    properties << Category.find(twin_id).properties if twin_id
-    binding.pry
+    properties.push(Category.find(twin_id).properties) if twin_id
   end
 end

@@ -16,6 +16,7 @@ class CategoriesController < ApplicationController
   end
 
   def edit
+    @category.twin_id = nil
   end
 
   def create
@@ -65,6 +66,6 @@ class CategoriesController < ApplicationController
   def category_params
     params.require(:category).permit(:name, :parent_id, :is_last, :twin_id, property_ids: [],
        categories_properties_attributes:[[ :id, :category_id, :property_id, :_destroy,
-        property_attributes:[:name, :field_type, :_destroy, :options]]])
+        property_attributes:[:id, :name, :field_type, :_destroy, :options]]])
   end
 end

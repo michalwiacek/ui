@@ -4,7 +4,6 @@ class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
   def index
-    binding.pry
     if params[:category]
       @category = Category.find(params[:category])
       descendant_ids = @category.descendant_ids

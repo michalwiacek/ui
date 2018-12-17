@@ -13,7 +13,11 @@
 l30 = %w(Opel Mercedes Tesla)
 l31 = %w(Apple Samsung Google)
 
-root = Category.create!(name: 'Root')
+if Category.first
+  root = Category.first
+else
+  root = Category.create!(name: 'Root')
+end
 root.properties.create!([{name: "Cena", field_type: "decimal"},{name: "Uzywany", field_type: "boolean"}])
 
 l2 = Category.create!([{name: "Samochody", parent: root}, {name: "Telefony", parent: root}])
@@ -21,12 +25,12 @@ l2 = Category.create!([{name: "Samochody", parent: root}, {name: "Telefony", par
 l2.first.properties.create!([{name: "Rocznik", field_type: "integer"},{name: "Przebieg", field_type: "integer"}])
 l2.last.properties.create!([{name: "Wersja", field_type: 'integer'},{name: 'System operacyjny', field_type: "string"}])
 
-opel = Category.create!(name: 'Opel', parent: l2.first, is_final: true)
-opel.properties.create!(name: "Silnik", field_type: "boolean", options: "benzyna, diesel")
+opel = Category.create!(name: 'Opel', parent: l2.first, is_last: true)
+opel.properties.create!(name: "Silnik", field_type: "enum", options: "benzyna, diesel")
 
-merc = Category.create!(name: 'Mercedes', parent: l2.first, is_final: true, twin_id: opel.id)
-tesla = Category.create!(name: 'Tesla', parent: l2.first, is_final: true)
+merc = Category.create!(name: 'Mercedes', parent: l2.first, is_last: true, twin_id: opel.id)
+tesla = Category.create!(name: 'Tesla', parent: l2.first, is_last: true)
 
 l31.each do |name|
-  Category.create!(name: name, parent: l2.last, is_final: true)
+  Category.create!(name: name, parent: l2.last, is_last: true)
 end

@@ -15,12 +15,12 @@
           %th type
           %th options
       %tbody
-        %tr
         - @category.properties.each do |prop|
-          %td= prop.id
-          %td= prop.name
-          %td= prop.field_type
-          %td= prop.options if prop.options
+          %tr
+            %td= prop.id
+            %td= prop.name
+            %td= prop.field_type
+            %td= prop.options if prop.options
 
   = link_to 'Edit', edit_category_path(@category), class: "btn btn-info"
   \|
